@@ -1,6 +1,6 @@
-# Color Changing Draw
+# Color Shifting LED
 
-> Change the color of an Anode LED over time
+> Change the color of an Anode LED over time, smoothly
 
 This is a program to change the color of an anode LED over time. You can supply an array of color values and it will infinitely shift between those colors in order.
 
