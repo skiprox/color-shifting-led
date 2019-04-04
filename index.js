@@ -8,10 +8,11 @@ const colors = require('./modules/colors').colors;
 let led;
 let anode;
 let colorInc = 0;
-let loopInc = 0;
 let currentColor = '';
 let nextColor = '';
 let interval;
+let intervalTimer = 0;
+let intervalIncrementer = require('./modules/timing')["intervalIncrementer"];
 
 /**
  * Change colors over time, looping through an array of them
@@ -20,7 +21,7 @@ let interval;
 class Main {
 	constructor() {
 		this.incrementColors();
-		console.log('Current and next color', currentColor, nextColor);
+		console.log(intervalIncrementer);
 		board.on("ready", () => {
 			anode = new five.Led.RGB({
 				pins: {
@@ -47,11 +48,11 @@ class Main {
 		});
 	}
 	loop() {
-		let intervalIncrementer = 0;
+		intervalTimer = 0;
 		interval = setInterval(() => {
-			anode.color(Utils.lerpColor(currentColor, nextColor, intervalIncrementer));
-			intervalIncrementer += 0.01;
-			if (intervalIncrementer >= 1) {
+			anode.color(Utils.lerpColor(currentColor, nextColor, intervalTimer));
+			intervalTimer += intervalIncrementer;
+			if (intervalTimer >= 1) {
 				clearInterval(interval);
 				this.incrementColors();
 				this.loop();
