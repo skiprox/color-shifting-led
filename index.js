@@ -3,7 +3,10 @@
 const Utils = require('./modules/utils.js');
 const five = require('johnny-five');
 const board = new five.Board();
-const colors = require('./modules/colors').colors;
+const controls = require('./modules/controls');
+const colors = controls.colors;
+let intervalIncrementer = controls.intervalIncrementer;
+const intensity = controls.intensity;
 
 let led;
 let anode;
@@ -12,7 +15,6 @@ let currentColor = '';
 let nextColor = '';
 let interval;
 let intervalTimer = 0;
-let intervalIncrementer = require('./modules/timing')["intervalIncrementer"];
 
 /**
  * Change colors over time, looping through an array of them
@@ -31,7 +33,7 @@ class Main {
 				},
 				isAnode: true
 			});
-			anode.intensity(100);
+			anode.intensity(intensity);
 			anode.color(currentColor);
 			this.loop();
 			board.repl.inject({
